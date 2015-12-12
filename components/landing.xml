@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+
+<!--********** Copyright 2015 Roku Corp.  All Rights Reserved. **********-->
+
+<component name="landingScene" extends="Scene" >
+
+<script type="text/brightscript" >
+<![CDATA[
+
+sub init()
+	m.top.backgroundURI = "pkg:/images/purplebg.jpg"
+
+        startButton = m.top.FindNode("startButton")
+
+	'm.top.setFocus(true)
+        startButton.setFocus(true)
+end sub
+
+]]>
+</script>
+
+<children>
+    <Label 
+	id="bottomLabel"
+	height="60"
+        width="0"
+	text = "All The Best Videos!"
+	horizAlign = "left"
+	vertAlign = "center"
+	translation="[160,620]" />
+
+    <Animation 
+	id="scrollbackAnimation"
+	duration="10"
+	repeat="true"
+	control="start"
+	easeFunction="linear" >
+	<Vector2DFieldInterpolator 
+		id = "scrollbackLabel"
+		key="[0.0, 0.5, 1.0]" 
+		keyValue="[ [160.0, 620.0], [620.0, 620.0], [160.0, 620.0] ]"
+    		fieldToInterp="bottomLabel.translation" />
+    </Animation>
+
+    <Button
+        id="startButton"
+        text="Start Game"
+        translation="[160,620]"
+    />
+
+<Poster
+  id="testPoster"
+  uri="http://assets.hightimes.com/obama-reschedule-marijuana.jpg"
+  width="0.0"
+  height="0.0"
+  translation="[160,8]" />
+
+</children>
+
+</component>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+
+<!--********** Copyright 2015 Roku Corp.  All Rights Reserved. **********-->
+
+<component name="labelanimationScene" extends="Scene" >
+
+<script type="text/brightscript" >
+<![CDATA[
+
+sub init()
+	m.top.backgroundURI = "pkg:/images/purplebg.jpg"
+
+	m.top.setFocus(true)
+end sub
+
+]]>
+</script>
+
+<children>
+    <Label 
+	id="bottomLabel"
+	height="60"
+        width="0"
+	text = "All The Best Videos!"
+	horizAlign = "left"
+	vertAlign = "center"
+	translation="[160,620]" />
+
+    <Animation 
+	id="scrollbackAnimation"
+	duration="10"
+	repeat="true"
+	control="start"
+	easeFunction="linear" >
+	<Vector2DFieldInterpolator 
+		id = "scrollbackLabel"
+		key="[0.0, 0.5, 1.0]" 
+		keyValue="[ [160.0, 620.0], [620.0, 620.0], [160.0, 620.0] ]"
+    		fieldToInterp="bottomLabel.translation" />
+    </Animation>
+</children>
+
+</component>
