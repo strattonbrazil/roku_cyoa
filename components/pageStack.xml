@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 
-<component name="landingScene" extends="Scene" >
+<component name="pageStackScene" extends="Scene" >
 
 <script type="text/brightscript" >
 <![CDATA[
@@ -12,6 +12,8 @@ sub init()
 
 	'm.top.setFocus(true)
         startButton.setFocus(true)
+
+        m.top.ObserveField("sceneContext", "onSceneContextUpdate")
 end sub
 
 function onKeyEvent(key as String, press as Boolean) as Boolean
@@ -27,6 +29,12 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
     end if
   end if
   return handled
+end function
+
+function onSceneContextUpdate()
+  print "something changed in the context"
+  print m.top.sceneContext.currentPage
+  print m.top.sceneContext.pageMapping
 end function
 
 ]]>
@@ -47,5 +55,9 @@ end function
   translation="[160,8]" />
 
 </children>
+
+<interface>
+  <field id="sceneContext" type="node" />
+</interface>
 
 </component>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+
+<component name="sceneContext" extends="Node" >
+
+<script type="text/brightscript" >
+<![CDATA[
+
+sub init()
+  print "loaded it!"
+end sub
+
+]]>
+</script>
+
+<interface>
+  <field id="currentPage" type="int" />
+  <field id="pageMapping" type="assocarray" />
+</interface>
+
+</component>
