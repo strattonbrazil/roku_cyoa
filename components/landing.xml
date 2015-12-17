@@ -2,50 +2,160 @@
 
 <component name="landingScene" extends="Scene" >
 
-<script type="text/brightscript" >
+  <script type="text/brightscript" >
 <![CDATA[
 
 sub init()
+        m.onLanding = true
+
 	m.top.backgroundURI = "pkg:/images/purplebg.jpg"
+        m.top.backExitsScene = false
 
         startButton = m.top.FindNode("startButton")
 
 	'm.top.setFocus(true)
         startButton.setFocus(true)
+
+
+        loadingTimer = m.top.FindNode("loadingTimer")
+        loadingTimer.ObserveField("fire", "updateReaderPage")
 end sub
 
+function showLoadingScreen()
+        loadingAnimation = m.top.FindNode("showLoadingScreenAnimation")
+        loadingAnimation.control = "start"
+end function
+
+function hideLoadingScreen()
+        loadingAnimation = m.top.FindNode("hideLoadingScreenAnimation")
+        loadingAnimation.control = "start"
+end function
+
+function getLoadingDuration()
+        return m.top.FindNode("showLoadingScreenAnimation").duration
+end function
+
+function updateReaderPage()
+        readerPage = m.top.FindNode("readerPage")
+        readerPage.visible = true
+
+        hideLoadingScreen()
+end function
+
+function startLoadingTimer()
+        print("updating screen in a few seconds")
+        print(getLoadingDuration())
+        loadingTimer = m.top.FindNode("loadingTimer")
+        loadingTimer.duration = getLoadingDuration()
+        loadingTimer.control = "start"
+end function
+
 function onKeyEvent(key as String, press as Boolean) as Boolean
-  print "some key event"
+  if m.onLanding
+    showLoadingScreen()
+    startLoadingTimer()
+
+    m.onLanding = false
+  end if
+
   handled = false
   if press then
     if (key = "back") then
       handled = false
     else
-      print "not back"
-      print key = "OK"
       handled = true
     end if
   end if
+
+  print "handled.... "
+  print handled
+
   return handled
 end function
 
 ]]>
-</script>
+  </script>
 
-<children>
+  <children>
+
+    <Poster
+      id="testPoster"
+      uri="pkg://images/mamas_kitchen.jpg"
+      width="1280.0"
+      height="720.0"
+      translation="[0,0]" />
+
+    <Poster
+      id="testPoster"
+      uri="pkg://images/vignette.png"
+      width="1280.0"
+      height="720.0"
+      translation="[0,0]" />
+
+    <Label
+      text="The Case of the Missing Sock" 
+      font="font:LargeBoldSystemFont"
+      color="#ffffff"
+      translation="[160,80]" />
+
+    <Label
+      text="Illustrated by Anthony Holden"
+      font="font:SmallBoldSystemFont"
+      color="#cccccc"
+      translation="[160,120]" />
+
     <Button
-        id="startButton"
-        text="Start Game"
-        translation="[160,620]"
-    />
+      id="startButton"
+      text="Start Game"
+      translation="[160,620]"
+      />
 
-<Poster
-  id="testPoster"
-  uri="http://assets.hightimes.com/obama-reschedule-marijuana.jpg"
-  width="0.0"
-  height="0.0"
-  translation="[160,8]" />
+    <!-- reader page -->
+    <Rectangle
+        id="readerPage"
+        color="0x0000FF"
+        width="1280"
+        height="720"
+        visible="false" />
 
-</children>
+    <!-- loading screen -->
+    <Rectangle
+        id="loadingRect"
+        color="0xFF0088"
+        width="1280"
+        height="720"
+        opacity="0.0" />
 
+    <Animation 
+        id="showLoadingScreenAnimation"
+        duration="2"
+        easeFunction="linear" >
+      <FloatFieldInterpolator
+          id = "myInterp"
+          key="[0.0, 1.0]"
+          keyValue="[ 0.0, 1.0]"
+          fieldToInterp="loadingRect.opacity" />
+    </Animation>
+
+    <Animation 
+        id="hideLoadingScreenAnimation"
+        duration="2"
+        easeFunction="linear" >
+      <FloatFieldInterpolator
+          id = "myInterp"
+          key="[0.0, 1.0]"
+          keyValue="[ 1.0, 0.0]"
+          fieldToInterp="loadingRect.opacity" />
+    </Animation>
+
+    <Timer
+        id="loadingTimer"
+        duration="0"
+        />
+
+  </children>
+
+  <interface>
+    <field id="sceneContext" type="node" />
+  </interface>
 </component>

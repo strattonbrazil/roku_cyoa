@@ -13,3 +13,4 @@ splash_screen_sd=pkg:/images/splash_sd.jpg
 splash_screen_hd=pkg:/images/sgxt_spl_hd.jpg
 splash_color=#000000
 splash_min_time=1000
+
