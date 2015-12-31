@@ -44,8 +44,11 @@ sub showLandingScreen()
 
     ' add the scene context
     sceneContext = createObject("roSGNode", "sceneContext")
-    sceneContext.currentPage = 1
+    sceneContext.currentPage = "1"
     sceneContext.pageMapping = { "a" : 1, "b" : 2, "c" : 3 }
+    sceneContext.pageInfo = {
+        "1" : "ack"
+    }
     scene.sceneContext = sceneContext
 
     while(true)

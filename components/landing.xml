@@ -6,6 +6,11 @@
 <![CDATA[
 
 sub init()
+        m.currentPage = "1"
+        m.pageInfo = {
+            "1" : { "text" : "it was a dark and stormy night" }
+        }
+
         m.onLanding = true
 
 	m.top.backgroundURI = "pkg:/images/purplebg.jpg"
@@ -39,12 +44,17 @@ function updateReaderPage()
         readerPage = m.top.FindNode("readerPage")
         readerPage.visible = true
 
+        print(m.currentPage)
+        print(m.pageInfo)
+        print(m.pageInfo[m.currentPage])
+
+        textLabel = m.top.FindNode("justTextLabel")
+        textLabel.text = m.pageInfo[m.currentPage].text
+
         hideLoadingScreen()
 end function
 
 function startLoadingTimer()
-        print("updating screen in a few seconds")
-        print(getLoadingDuration())
         loadingTimer = m.top.FindNode("loadingTimer")
         loadingTimer.duration = getLoadingDuration()
         loadingTimer.control = "start"
@@ -66,9 +76,6 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
       handled = true
     end if
   end if
-
-  print "handled.... "
-  print handled
 
   return handled
 end function
@@ -116,7 +123,14 @@ end function
         color="0x0000FF"
         width="1280"
         height="720"
-        visible="false" />
+        visible="false">
+      <!-- just text -->
+      <Label
+          id="justTextLabel"      
+          font="font:LargeBoldSystemFont"
+          color="#ffffff"
+          translation="[160,80]" />
+    </Rectangle>
 
     <!-- loading screen -->
     <Rectangle
